@@ -1,51 +1,46 @@
-(Financial: credit card number validation) Credit card numbers follow certain
-patterns: It must have between 13 and 16 digits, and the number must start with:
+#include <iostream>
 
-- 4 for Visa cards
-- 5 for MasterCard credit cards
-- 37 for American Express cards
-- 6 for Discover cards
+int main() {
+    // Define the dimensions of the dataset
+    const int NUM_STUDENTS = 8;
+    const int NUM_QUESTIONS = 10;
 
-In 1954, Hans Luhn of IBM proposed an algorithm for validating credit card numbers.
-The algorithm is useful to determine whether a card number is entered correctly
-or whether a credit card is scanned correctly by a scanner. Credit card
-numbers are generated following this validity check, commonly known as the
-Luhn check or the Mod 10 check, which can be described as follows (for illustration,
-consider the card number 4388576018402626):
+    
+    
+    // Two-dimensional array  THE 8  students' answers
+    char answers[NUM_STUDENTS][NUM_QUESTIONS] = {
+        {'A', 'B', 'A', 'C', 'C', 'D', 'E', 'E', 'A', 'D'}, // Student 0
+        {'D', 'B', 'A', 'B', 'C', 'A', 'E', 'E', 'A', 'D'}, // Student 1
+        {'E', 'D', 'D', 'A', 'C', 'B', 'E', 'E', 'A', 'D'}, // Student 2
+        {'C', 'B', 'A', 'E', 'D', 'C', 'E', 'E', 'A', 'D'}, // Student 3
+        {'A', 'B', 'D', 'C', 'C', 'D', 'E', 'E', 'A', 'D'}, // Student 4
+        {'B', 'B', 'E', 'C', 'C', 'D', 'E', 'E', 'A', 'D'}, // Student 5
+        {'B', 'B', 'A', 'C', 'C', 'D', 'E', 'E', 'A', 'D'}, // Student 6
+        {'E', 'B', 'E', 'C', 'C', 'D', 'E', 'E', 'A', 'D'}  // Student 7
+    };
 
-1. Double every second digit from right to left. If doubling of a digit results in a
-   two-digit number, add up the two digits to get a single-digit number.
+    // One-dimensional array storing the answer key for marking guide
 
-![Credit Card](./credit_card.png)
+    char key[NUM_QUESTIONS] = {'D', 'B', 'D', 'C', 'C', 'D', 'A', 'E', 'A', 'D'};
 
-2. Now add all single-digit numbers from Step 1.
-3. Add all digits in the odd places from right to left in the card number.
-4. Sum the results from Steps 2 and 3.
-5. If the result from Step 4 is divisible by 10, the card number is valid; otherwise,
-it is invalid. For example, the number 4388576018402626 is invalid, but the
-number 4388576018410707 is valid.
 
-Write a program that prompts the user to enter a credit card number as an integer.
-Display whether the number is valid or invalid. Design your program to use the
-following functions:
+    std::cout << "--- Test Grading Results ---" << std::endl;
 
-//Return true if the card number is valid\
-bool isValid(long long number);
+    // Outer loop trpeats  through each student
 
-//Get the result from Step 2\
-int sumOfDoubleEvenPlace(long long number);
+    for (int i = 0; i < NUM_STUDENTS; i++) {
+        int correctCount = 0;
 
-//Return this number if it is a single digit, otherwise, return the sum of the two digits\
-int getDigit(int number);
+        // Inner loop iterates through each question for the current student for eva;uating the answers
+        for (int j = 0; j < NUM_QUESTIONS; j++) {
+            if (answers[i][j] == key[j]) {
+                correctCount++;
+            }
+        }
 
-//Return sum of odd place digits in number\
-int sumOfOddPlace(long long number);
+        // Display the results for the current student
+        std::cout << "Student " << i << "'s correct count is " << correctCount << std::endl;
+    }
 
-//Return true if the digit d is a prefix for number\
-bool prefixMatched(long long number, int d);
-
-//Return the number of digits in d\
-int getSize(long long d);
-
-//Return the first k number of digits from number. If the number of digits in number is less than k, return number.\
-long long getPrefix(long long number, int k);
+    return 0;
+}
